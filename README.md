@@ -31,6 +31,6 @@ Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build 
 
 
 ## Using wireup ##
-Clone the repository and then use the skeleton to build new apps.
+Fork the repository and then use the skeleton to build new apps in forked repository.
 All required wiring between backbone and react is already done, along with less.
 Build is also working. So just download and save time on your skeleton setup.
