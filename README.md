@@ -20,12 +20,15 @@ For building this project, please ensure you have latest version of [node](https
 		`npm install .`
 
 Do not forget the dot at the end of command.
+
 2. Once all modules are downloaded run build.cmd, present in same folder, from command prompt
 
 		`build.cmd`
 
 Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build system and [babel](https://babeljs.io/ "babel") compiler through [node](https://nodejs.org/en/ "NodeJs").
+
 3. All required files will be dropped in out directory as well as alongside the files in app folder.
+
 4. Run index.html via a http endpoint and application would be running.
 
 
