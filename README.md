@@ -1,7 +1,7 @@
 # Wireup #
 
 ----------
-This is a primer for web UI client MVVM apps. 
+This is a primer for web UI MVVM apps. 
 Key features for this primer are
 - Components are implemented in [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6")
 - MVP architecture using [Backbone](http://backbonejs.org/ "Backbone")
@@ -35,4 +35,4 @@ Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build 
 
 
 ## Using wireup ##
-Fork the repository and then use the skeleton to build new apps in forked repository.
+Fork the repository and then use the primer to build new apps in forked repository.
