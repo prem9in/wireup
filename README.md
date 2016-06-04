@@ -1,7 +1,7 @@
 # Wireup #
 
 ----------
-This project is primer for web UI client MVVM apps. 
+This is a primer for web UI client MVVM apps. 
 Key features for this primer are
 - Components are implemented in [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6")
 - MVP architecture using [Backbone](http://backbonejs.org/ "Backbone")
