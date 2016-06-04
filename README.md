@@ -1,22 +1,26 @@
 # Wireup #
 
 ----------
-This project is skeleton to web UI client projects built using [React](http://facebook.github.io/react/ "React") and [Backbone](http://backbonejs.org/ "Backbone"). [less](http://lesscss.org/ "Less") for css styles is also integrated.
-Initial wiring up is done with one model and it demonstrates the wiring between backbone and react.
+This project is primer for web UI client MVVM apps. 
+Key features for this primer are
+- Components are implemented in [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6")
+- MVP architecture using [Backbone](http://backbonejs.org/ "Backbone")
+- Views are built using [React](http://facebook.github.io/react/ "React") 
+- [Less](http://lesscss.org/ "Less") for css is also integrated in this primer. 
 
-> http ajax pipeline for [Backbone](http://backbonejs.org/ "Backbone") is hijacked in this project. This is not necessary for wiring up. It was added to have custom control on http requests made by client.
+
+> http ajax pipeline for [Backbone](http://backbonejs.org/ "Backbone") is refactored in this project with a custom implementation. This is not necessary. It was added to have more control on http requests made by client.
 > For all normal purposes, [Backbone](http://backbonejs.org/ "Backbone") default ajax pipeline can be used.
 
 
 ## Building the project ##
-Project is written in [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6") and hence will need transpilation to work in all browsers, until browsers starts supporting all [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6") features.
 For building this project, please ensure you have latest version of [node](https://nodejs.org/en/ "NodeJs") and [npm](https://www.npmjs.com/ "npm") installed on your machine.
 
-1. First step is to get all required npm packages. To do this open command prompt and at root folder (where package.json resides) execute
+1. First step is to get all required npm packages. To do this open command prompt and at root folder (where file package.json resides) execute
 		`npm install .`
 
 Do not forget the dot at the end of command.
-2. Once all modules are downloaded run the build.cmd from command prompt
+2. Once all modules are downloaded run build.cmd, present in same folder, from command prompt
 
 		`build.cmd`
 
@@ -32,5 +36,3 @@ Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build 
 
 ## Using wireup ##
 Fork the repository and then use the skeleton to build new apps in forked repository.
-All required wiring between backbone and react is already done, along with less.
-Build is also working. So just download and save time on your skeleton setup.
