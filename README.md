@@ -7,7 +7,7 @@ Key features for this primer are
 - MVP architecture using [Backbone](http://backbonejs.org/ "Backbone")
 - Views are built using [React](http://facebook.github.io/react/ "React") 
 - [Less](http://lesscss.org/ "Less") for css is also integrated in this primer. 
-- Build system included.
+- Build system included with support for minification and source maps.
 
 
 > http ajax pipeline for [Backbone](http://backbonejs.org/ "Backbone") is refactored in this project with a custom implementation. This is not necessary. It was added to have more control on http requests made by client.
