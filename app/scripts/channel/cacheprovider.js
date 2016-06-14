@@ -6,7 +6,6 @@ import appConfig from 'model/appconfig';
 'use strict';
 
 let excludedParams = ['_', 'session-id', 'request-id', 'X-Requested-With', 'Prefer', 'api-version', 'searchMode', 'api-key'];
-let datatimestampParamName = 'clientCacheDataTimestamp';
 
 let storage = sessionStorage.supportsStorage ? sessionStorage : memoryStorage;
 
@@ -76,12 +75,10 @@ class CacheProvider {
     start(requestOptions) {
         let cacheKey = getCacheKey(requestOptions.url, requestOptions.data);
         let cachedData = storage.get(cacheKey);
-        let requestData = _.extend({}, requestOptions.data);
-        if (cachedData &&
-            cachedData.hasOwnProperty(datatimestampParamName)
-            // todo add any global cache expiration policy
+        if (!_.isEmpty(cachedData))
+            // TODO: add any global cache expiration policy
             // or add any model specific cache expiration policy
-            ) {
+             {
             requestOptions.skipRequest = true;
             if (_.isFunction(requestOptions.success)) {
                 _.defer(function(){
@@ -89,22 +86,13 @@ class CacheProvider {
                 });
             }
         } else {
-            requestOptions.data = requestData;
             let originalSuccess = requestOptions.success;
             requestOptions.skipRequest = false;
             requestOptions.success = function(data, textStatus, xhr) {
-                // todo determine any failures before updating cache
-                let responseData = data;
-                if (responseData) {
-                    if (responseData.noupdates == true) {
-                        responseData = cachedData;
-                    } else {
-                        responseData[datatimestampParamName] = (new Date()).getTime();
-                        storage.set(cacheKey, responseData);
-                    }
-                }
+                // TODO: determine any failures before updating cache
+                storage.set(cacheKey, data);
                 if (_.isFunction(originalSuccess)) {
-                    originalSuccess(responseData, textStatus, xhr);
+                    originalSuccess(data, textStatus, xhr);
                 }
             }
         }

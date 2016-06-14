@@ -2,7 +2,6 @@ import $ from 'jquery';
 
 'use strict';
 
-
 let logError = function (error) {
 //// todo: hook up to logger.
 };

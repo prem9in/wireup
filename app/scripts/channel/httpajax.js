@@ -11,13 +11,6 @@ import appConfig from 'model/appconfig';
 let setContext = function(request, context, requestOptions) {
     let originalBeforeSend = request.beforeSend;
     request.beforeSend = function(jqXHR, settings) {
-        if (context.user) {
-            jqXHR.setRequestHeader('Authorization', 'Bearer ' + context.user.AccessToken);           
-        }
-        jqXHR.setRequestHeader('session-id', context.sessionId);
-        jqXHR.setRequestHeader('request-id', context.requestId);
-        jqXHR.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
         // expect a map with key as string type
         if (requestOptions.headers) {
             let keys = Object.keys(requestOptions.headers);
@@ -37,7 +30,7 @@ let prepareData = function(data, verb, contentType) {
         return null;
     }
 
-    if (typeof data !== 'string' && contentType === 'application/json') {
+    if (typeof data !== 'string' && (contentType === 'application/json' || contentType === 'text/plain; charset=utf-8')) {
         return JSON.stringify(data);
     }
 
@@ -60,6 +53,10 @@ let prepareUrl = function(url, data, verb, options) {
         if (_.isObject(options) && _.isObject(options.query)) {
             url = url + (url.indexOf('?') === -1 ? '?' : '&') + $.param(options.query);
         }
+    }
+
+    if (_.isObject(options) && options.useProxy) {
+        url = appConfig.proxyurl + '?' + $.param({host: encodeURI(url)});
     }
 
     return url;

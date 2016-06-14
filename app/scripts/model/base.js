@@ -19,6 +19,7 @@ export default class Base extends Backbone.Model {
         this.fetchtimestamp = (new Date()).getTime();
         options = _.extend({
             parse: true,
+            method: 'read',
             fstamp: this.fetchtimestamp
         }, options);
         let model = this;
@@ -40,13 +41,14 @@ export default class Base extends Backbone.Model {
                 model.trigger('sync', model, resp, options);
             }
         };
-        return this.sync('read', this, options);
+
+        return this.sync(options.method, this, options);
     }
 
     sync(method, model, options) {
         let url = options.url || this.url;
-        let data = options && options.model ? options.model : model.toJSON();
-        let idatttribute = options && options.idatttribute ? options.idatttribute : model.idAttribute;
+        let data = options.model ? options.model : model.toJSON();
+        let idatttribute = options.idatttribute ? options.idatttribute : model.idAttribute;
         if (idatttribute && data[idatttribute] && options.substituteId) {
             url = this.url + '(' + data[idatttribute] + ')';
         }
@@ -54,6 +56,9 @@ export default class Base extends Backbone.Model {
         switch (method) {
             case 'read':
                 verb = 'GET';
+                break;
+            case 'execute':
+                verb = 'POST';
                 break;
             case 'create':
                 if (idatttribute) {

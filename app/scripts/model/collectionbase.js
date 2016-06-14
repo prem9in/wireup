@@ -15,6 +15,7 @@ export default class Base extends Backbone.Collection {
         this.fetchtimestamp = (new Date()).getTime();
         options = _.extend({
             parse: true,
+            method: 'read',
             fstamp: this.fetchtimestamp
         }, options);
         let success = options.success;
@@ -35,7 +36,7 @@ export default class Base extends Backbone.Collection {
                 collection.trigger('sync', collection, resp, options);
             }
         };
-        return this.sync('read', this, options);
+        return this.sync(options.method, this, options);
     }
 
     //// Only GET should be called for collections
@@ -46,6 +47,9 @@ export default class Base extends Backbone.Collection {
         switch (method) {
             case 'read':
                 verb = 'GET';
+                break;
+            case 'execute':
+                verb = 'POST';
                 break;
             case 'create':
                 verb = 'POST';

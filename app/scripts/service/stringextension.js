@@ -20,6 +20,12 @@ class StringExtension  {
 		       return this.substr(position, searchString.length) === searchString;
 		  	};
 		}
+		if (typeof String.prototype.remove !== 'function') {
+			String.prototype.remove = function(startIndex, endIndex){
+				var stringToRemove = this.substring(startIndex, endIndex);
+				return this.replace(stringToRemove, '');
+			};
+		}
     }
  }
 

@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import _ from 'underscore';
 import { sessionStorage, memoryStorage } from 'service/storage';
 import Guid from 'service/guidgenerator';
 import appstate from 'model/appstate';

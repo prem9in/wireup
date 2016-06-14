@@ -5,10 +5,6 @@ import { localStorage } from 'service/storage';
 
 'use strict';
 
-const serviceprefix = "service";
-const routeprefix = "customer";
-const cloudcustPrefix = "cloud";
-
 class StateManager {
 
     constructor() {

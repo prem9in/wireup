@@ -4,7 +4,7 @@ import contextProvider from 'service/contextprovider';
 
 'use strict';
 
-const logUrl = "" // set the url where logs will be posted.
+const logUrl = ""; // set the url where logs will be posted.
 
 const flushInterval = 10000;
 const maxBufferSize = 50;

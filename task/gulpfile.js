@@ -13,7 +13,7 @@ var amdOptimize = require('amd-optimize');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
-var uglifyFlag = process.env.uglify == 'true' ? true : false;
+var uglifyFlag = process.env.uglify == 'false' ? false : true;
 
 var outfile = "app.js";
 
@@ -32,6 +32,8 @@ var bootstrapStylePath = libFolder + "\\bootstrap\\css\\bootstrap.min.css";
 var bootstrapStyleThemePath = libFolder + "\\bootstrap\\css\\bootstrap-theme.min.css";
 var backbonePath = libFolder + "\\backbone\\backbone-min.js";
 var underscorePath = libFolder + "\\underscore\\underscore.js";
+var bootstrapFonts = [ libFolder + "\\bootstrap\\fonts\\glyphicons-halflings-regular.ttf" ];
+var destinationFont = appFolder + "\\fonts";
 
 var baseModule = "route/application";
 var destdir = appFolder + "\\scripts";
@@ -57,7 +59,8 @@ var publishSrc = [libcssdest + '\\app.css',
                   appFolder + '\\fonts\\**\*',
                   appFolder + "\\require.config.js",
                   appFolder + "\\global.js",
-                  appFolder + "\\index.html" ];
+                  appFolder + "\\index.html",
+                  appFolder + "\\favicon.ico" ];
 
 //// amd optimization options
 var amdOptions = {
@@ -109,6 +112,12 @@ gulp.task('copy-lib-js', function() {
     .pipe(gulp.dest(libjsdest));
 });
 
+/* Task to copy font files */
+gulp.task('copy-fonts', function() {
+    gulp.src(bootstrapFonts)
+        .pipe(gulp.dest(destinationFont));
+});
+
 /* Task to compile less */
 gulp.task('compile-less', function() {  
   gulp.src(appless)
@@ -127,11 +136,11 @@ gulp.task('copy-lib-css', function() {
 // compile from ES6 to ES5
 gulp.task('compile', function() {
     return gulp.src(srcpatterns)
-    //.pipe(sourcemaps.init({loadMaps: false}))
+        .pipe(sourcemaps.init({loadMaps: false}))
     .pipe(babel({'modules': 'amd'}))
     .pipe(amdOptimize(baseModule, amdOptions))
     .pipe(concat(outfile))
-    //.pipe(sourcemaps.write())
+        .pipe(sourcemaps.write())
     .pipe(gulp.dest(destdir));
 });
 
@@ -162,7 +171,7 @@ gulp.task('publish', function() {
         .pipe(gulp.dest(outdir));
 });
 
-var taskArray = ['copy-require', 'copy-lib-js', 'copy-lib-css', 'compile','compile-less'];
+var taskArray = ['copy-require', 'copy-lib-js', 'copy-lib-css', 'copy-fonts', 'compile','compile-less'];
 if (uglifyFlag) {
   taskArray.push('compress');
 }
