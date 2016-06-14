@@ -2,11 +2,17 @@
 
 ----------
 This is a primer for web UI MVVM apps. 
+
 Key features for this primer are
+
 - Components are implemented in [ES6](http://exploringjs.com/es6/ch_about-es6.html "ES6")
+
 - MVP architecture using [Backbone](http://backbonejs.org/ "Backbone")
+
 - Views are built using [React](http://facebook.github.io/react/ "React") 
+
 - [Less](http://lesscss.org/ "Less") for css is also integrated in this primer. 
+
 - Build system included with support for minification and source maps.
 
 
@@ -18,11 +24,12 @@ Key features for this primer are
 For building this project, please ensure you have latest version of [node](https://nodejs.org/en/ "NodeJs") and [npm](https://www.npmjs.com/ "npm") installed on your machine.
 
 1- First step is to get all required npm packages. To do this open command prompt and at root folder (where file package.json resides) execute
-		`npm install .`
+
+		npm install .
 
 Do not forget the dot at the end of command.
 
-2- Once all modules are downloaded run build.cmd, present in same folder, from command prompt.
+2- Once all modules are downloaded run **build.cmd**, present in same folder, from command prompt.
 
 Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build system and [babel](https://babeljs.io/ "babel") compiler through [node](https://nodejs.org/en/ "NodeJs").
 
@@ -39,3 +46,5 @@ Under the hood build.cmd uses [gulp](http://gulpjs.com/ "gulp") streaming build 
 ## Using wireup ##
 Fork the repository and then use the primer to build new apps in forked repository.
 Use the existing build system for your application.
+
+
