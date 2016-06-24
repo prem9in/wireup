@@ -13,7 +13,7 @@ var amdOptimize = require('amd-optimize');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
-var uglifyFlag = process.env.uglify == 'false' ? false : true;
+var uglifyFlag = process.env.uglify == 'true' ? true : false;
 
 var outfile = "app.js";
 
@@ -90,16 +90,21 @@ var amdOptions = {
         }
     };
 
-var log = function(msg) {
+var log = function(msg, iserr) {
+    var logmsg = iserr ? gutil.colors.red(msg) : gutil.colors.green(msg);
+    gutil.log(logmsg);
+    /*
   exec('echo ' + msg, function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
   });
+  */
 };
 
 // task for copying require JS library to local dev folder
 gulp.task('copy-require', function() {
   // do not change the order
+    log('copying requireJS. destination: '+libjsdest);
   return gulp.src([requirePath])
     .pipe(gulp.dest(libjsdest));
 });
@@ -107,6 +112,7 @@ gulp.task('copy-require', function() {
 // task for copying all library JS to local dev folder
 gulp.task('copy-lib-js', function() {
   // do not change the order
+    log('copying JS libraries. destination: '+libjsdest);
   return gulp.src([jQueryPath, bootstrapPath, underscorePath, backbonePath, reactPath, reactDomPath])
     .pipe(concat('framework.js'))
     .pipe(gulp.dest(libjsdest));
@@ -114,43 +120,39 @@ gulp.task('copy-lib-js', function() {
 
 /* Task to copy font files */
 gulp.task('copy-fonts', function() {
+    log('copying fonts. destination: '+destinationFont);
     gulp.src(bootstrapFonts)
         .pipe(gulp.dest(destinationFont));
-});
-
-/* Task to compile less */
-gulp.task('compile-less', function() {  
-  gulp.src(appless)
-    .pipe(less())
-    .pipe(gulp.dest(libcssdest));
 });
 
 // task for copying all library css styles to local dev folder
 gulp.task('copy-lib-css', function() {
   // do not change the order
+    log('copying styles. destination: '+libcssdest);
   return gulp.src([bootstrapStyleThemePath, bootstrapStylePath])
     .pipe(concat('framework.css'))
     .pipe(gulp.dest(libcssdest));
 });
 
+/* Task to compile less */
+gulp.task('compile-less', ['copyComponents'], function() {
+    log('compiling less to css. destination: '+libcssdest);
+    gulp.src(appless)
+        .pipe(less())
+        .pipe(gulp.dest(libcssdest));
+});
 // compile from ES6 to ES5
-gulp.task('compile', function() {
+gulp.task('compile', ['copyComponents'], function() {
+    log('compiling ES6 to ES5 modules. minification: ' + uglifyFlag + '. destination: ' + destdir);
     return gulp.src(srcpatterns)
-        .pipe(sourcemaps.init({loadMaps: false}))
+     //   .pipe(sourcemaps.init({loadMaps: false}))
     .pipe(babel({'modules': 'amd'}))
     .pipe(amdOptimize(baseModule, amdOptions))
     .pipe(concat(outfile))
-        .pipe(sourcemaps.write())
+        .pipe(uglifyFlag ? uglify() : gutil.noop())
+     //   .pipe(sourcemaps.write())
     .pipe(gulp.dest(destdir));
 });
-
-gulp.task('compress', function() {
-  log('Scripts minified.');
-  return gulp.src(destdir + '\\' + outfile)
-    .pipe(uglify())
-    .pipe(gulp.dest(destdir));
-});
-
 
 // generate global.js to set context such as version, etc
 gulp.task('setglobal', function() {
@@ -158,28 +160,23 @@ gulp.task('setglobal', function() {
     var content = "window.scriptVersion=" + timeOfBuild + ";";
     fs.writeFile(globalFilePath, content, 'utf8', (err) => {
         if (err) {
-          log('Error: global context cannot be set. Details: ' +  err);
+          log('setglobal: global context can not be set. Error Details: ' +  err, true);
         } else {
-          log('Success: global context set successfully.');
+          log('setglobal: global context set successfully.');
         }
     });
 });
 
 // publish files to out dir
-gulp.task('publish', function() {
+gulp.task('publish', ['compile', 'compile-less', 'setglobal' ], function() {
     return gulp.src(publishSrc, {base: appFolder})
         .pipe(gulp.dest(outdir));
 });
 
-var taskArray = ['copy-require', 'copy-lib-js', 'copy-lib-css', 'copy-fonts', 'compile','compile-less'];
-if (uglifyFlag) {
-  taskArray.push('compress');
-}
-taskArray.push('setglobal');
-taskArray.push('publish');
+gulp.task('copyComponents', ['copy-require', 'copy-lib-js', 'copy-lib-css', 'copy-fonts']);
 
 // default task
-gulp.task('default', taskArray);
+gulp.task('default', ['publish']);
 
 // start the default task
 gulp.start('default');
