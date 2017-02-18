@@ -7,7 +7,8 @@ requirejs.config({
         'backbone': 'lib/framework',
         'react': 'lib/framework',
         'reactdom': 'lib/framework',
-        'route/application': 'app'
+        'route/application': 'app',
+        'domReady': 'app'
     },
     'map': {},
     'waitSeconds': 5000,
@@ -28,6 +29,9 @@ requirejs.config({
     }
 });
 
-requirejs(["route/application"], function(app) {
-    app.start();
+require(["domReady", "route/application"], function(domReady, app) {
+    domReady(function () {
+     app.default.start();
+  });
 });
+

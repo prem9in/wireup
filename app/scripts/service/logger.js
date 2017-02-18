@@ -76,7 +76,7 @@ class Logger {
                 console.log(message);
             }
             /// flush buffer upon window unload/referesh
-        $(window).unload(function() {
+        $(window).on("unload", function() {
             flushLog(true);
             window.clearInterval(flushTimer);
         });

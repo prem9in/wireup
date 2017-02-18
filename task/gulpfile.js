@@ -9,7 +9,7 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var less       = require('gulp-less');
-var amdOptimize = require('amd-optimize');
+var amdOptimize = require('gulp-amd-optimizer');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
@@ -23,10 +23,11 @@ var appFolder = currentFolder + "\\..\\app";
 var libFolder = currentFolder + "\\..\\lib";
 
 // source path to script libraries packages
-var jQueryPath = libFolder + "\\jquery\\jquery-2.2.4.min.js";
-var reactPath = libFolder + "\\react\\react.15.1.0.min.js";
-var reactDomPath = libFolder + "\\react\\react-dom.15.1.0.min.js";
+var jQueryPath = libFolder + "\\jquery\\jquery-3.1.1.min.js";
+var reactPath = libFolder + "\\react\\react_15.4.2.min.js";
+var reactDomPath = libFolder + "\\react\\react_dom_15.4.2.min.js";
 var requirePath = libFolder + "\\require\\require.js";
+var requireDOMReadyPath = libFolder + "\\require\\domReady";
 var bootstrapPath = libFolder + "\\bootstrap\\js\\bootstrap.min.js";
 var bootstrapStylePath = libFolder + "\\bootstrap\\css\\bootstrap.min.css";
 var bootstrapStyleThemePath = libFolder + "\\bootstrap\\css\\bootstrap-theme.min.css";
@@ -62,14 +63,21 @@ var publishSrc = [libcssdest + '\\app.css',
                   appFolder + "\\index.html",
                   appFolder + "\\favicon.ico" ];
 
-//// amd optimization options
 var amdOptions = {
-        'paths': {
-          'jquery': 'empty:',
-          'underscore': 'empty:',
-          'backbone': 'empty:',
-          'react': 'empty:',
-          'reactdom': 'empty:',
+  umd: false
+};
+
+//// amd optimization options
+var requireConfig = {        
+        'baseUrl': destdir,
+        'paths': {         
+          'jquery': 'empty',
+          'underscore': 'empty',
+          'backbone': 'empty',
+          'react': 'empty',
+          'reactdom': 'empty',
+          'exports': 'empty',
+          'domReady': requireDOMReadyPath
         },
         'map': {
         },
@@ -145,12 +153,12 @@ gulp.task('compile-less', ['copyComponents'], function() {
 gulp.task('compile', ['copyComponents'], function() {
     log('compiling ES6 to ES5 modules. minification: ' + uglifyFlag + '. destination: ' + destdir);
     return gulp.src(srcpatterns)
-     //   .pipe(sourcemaps.init({loadMaps: false}))
-    .pipe(babel({'modules': 'amd'}))
-    .pipe(amdOptimize(baseModule, amdOptions))
+       .pipe(sourcemaps.init({loadMaps: false}))
+    .pipe(babel())
+    .pipe(amdOptimize(requireConfig, amdOptions))
     .pipe(concat(outfile))
         .pipe(uglifyFlag ? uglify() : gutil.noop())
-     //   .pipe(sourcemaps.write())
+      .pipe(sourcemaps.write('./', { includeContent: false }))
     .pipe(gulp.dest(destdir));
 });
 

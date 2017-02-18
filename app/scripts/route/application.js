@@ -4,6 +4,7 @@ import stateManager from 'route/statemanager';
 import arrayExtension from 'service/arrayextension';
 import stringExtension from 'service/stringextension';
 import dependencies from 'model/dependencies';
+import domReady from 'domReady';
 
 'use strict';
 
