@@ -19,49 +19,49 @@ var outfile = "app.js";
 
 // destination paths
 var currentFolder = path.resolve('.');
-var appFolder = currentFolder + "\\..\\app";
-var libFolder = currentFolder + "\\..\\lib";
+var appFolder = currentFolder + "/../app";
+var libFolder = currentFolder + "/../lib";
 
 // source path to script libraries packages
-var jQueryPath = libFolder + "\\jquery\\jquery-3.1.1.min.js";
-var reactPath = libFolder + "\\react\\react_15.4.2.min.js";
-var reactDomPath = libFolder + "\\react\\react_dom_15.4.2.min.js";
-var requirePath = libFolder + "\\require\\require.js";
-var requireDOMReadyPath = libFolder + "\\require\\domReady";
-var bootstrapPath = libFolder + "\\bootstrap\\js\\bootstrap.min.js";
-var bootstrapStylePath = libFolder + "\\bootstrap\\css\\bootstrap.min.css";
-var bootstrapStyleThemePath = libFolder + "\\bootstrap\\css\\bootstrap-theme.min.css";
-var backbonePath = libFolder + "\\backbone\\backbone-min.js";
-var underscorePath = libFolder + "\\underscore\\underscore.js";
-var bootstrapFonts = [ libFolder + "\\bootstrap\\fonts\\glyphicons-halflings-regular.ttf" ];
-var destinationFont = appFolder + "\\fonts";
+var jQueryPath = libFolder + "/jquery/jquery-3.1.1.min.js";
+var reactPath = libFolder + "/react/react_15.4.2.min.js";
+var reactDomPath = libFolder + "/react/react_dom_15.4.2.min.js";
+var requirePath = libFolder + "/require/require.js";
+var requireDOMReadyPath = libFolder + "/require/domReady";
+var bootstrapPath = libFolder + "/bootstrap/js/bootstrap.min.js";
+var bootstrapStylePath = libFolder + "/bootstrap/css/bootstrap.min.css";
+var bootstrapStyleThemePath = libFolder + "/bootstrap/css/bootstrap-theme.min.css";
+var backbonePath = libFolder + "/backbone/backbone-min.js";
+var underscorePath = libFolder + "/underscore/underscore.js";
+var bootstrapFonts = [ libFolder + "/bootstrap/fonts/glyphicons-halflings-regular.ttf" ];
+var destinationFont = appFolder + "/fonts";
 
 var baseModule = "route/application";
-var destdir = appFolder + "\\scripts";
-var globalFilePath = appFolder + "\\global.js";
-var srcpatterns = [ appFolder + "\\scripts\\**\\*.js", 
-                  "!" + appFolder + "\\scripts\\lib\\**\\*.js", 
-                  "!" + appFolder + "\\scripts\\*.js", 
-                  appFolder + "\\scripts\\**\\*.jsx"];
+var destdir = appFolder + "/scripts";
+var globalFilePath = appFolder + "/global.js";
+var srcpatterns = [ appFolder + "/scripts/**/*.js", 
+                  "!" + appFolder + "/scripts/lib/**/*.js", 
+                  "!" + appFolder + "/scripts/*.js", 
+                  appFolder + "/scripts/**/*.jsx"];
 
-var libjsdest = appFolder + "\\scripts\\lib";
-var libcssdest = appFolder + "\\styles";
-var appless = libcssdest + "\\app.less";
+var libjsdest = appFolder + "/scripts/lib";
+var libcssdest = appFolder + "/styles";
+var appless = libcssdest + "/app.less";
 
-var outdir = process.env.OUTPUTROOT || currentFolder + "\\..\\out";
+var outdir = process.env.OUTPUTROOT || currentFolder + "/../out";
 
-var publishSrc = [libcssdest + '\\app.css',
-                  libcssdest + '\\framework.css',
-                  libcssdest + '\\images\\*.*',
-                  libjsdest + '\\framework.js',
-                  libjsdest + '\\require.js',
-                  destdir + '\\app.js',
-                  appFolder + '\\images\\**\\*',
-                  appFolder + '\\fonts\\**\*',
-                  appFolder + "\\require.config.js",
-                  appFolder + "\\global.js",
-                  appFolder + "\\index.html",
-                  appFolder + "\\favicon.ico" ];
+var publishSrc = [libcssdest + '/app.css',
+                  libcssdest + '/framework.css',
+                  libcssdest + '/images/*.*',
+                  libjsdest + '/framework.js',
+                  libjsdest + '/require.js',
+                  destdir + '/app.js',
+                  appFolder + '/images/**/*',
+                  appFolder + '/fonts/**/*',
+                  appFolder + "/require.config.js",
+                  appFolder + "/global.js",
+                  appFolder + "/index.html",
+                  appFolder + "/favicon.ico" ];
 
 var amdOptions = {
   umd: false
